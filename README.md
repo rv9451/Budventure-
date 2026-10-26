@@ -1,68 +1,78 @@
-# Taskflow
+# Task Management System
 
-Taskflow is a Laravel 12 task management application with Admin and Employee roles. Admins manage projects and team tasks. Employees can view and update only their assigned tasks. Self-registration is disabled; demo users are created by the seeder.
+A Laravel 12 application with Admin and Employee roles. Admins manage projects and tasks; employees view and update their assigned tasks. Spatie Laravel Permission handles role-based access.
 
-## Requirements
+## MySQL Setup (Windows)
 
-- PHP 8.2 or newer
-- Composer
-- Node.js and npm
-- SQLite, MySQL, or PostgreSQL
+Requirements: PHP 8.2+, Composer, and a running MySQL server. Run the commands from the Taskflow project folder.
 
-Spatie Laravel Permission is already declared in `composer.json`. `composer install` installs it with the other PHP dependencies.
+### 1. Install Laravel and Spatie dependencies
 
-## Installation
-
-Run these steps from the repository root.
-
-### 1. Install PHP dependencies
-
-```sh
+```powershell
 composer install
 ```
 
-### 2. Create your environment file
+Laravel and Spatie Laravel Permission are already included in this repository's Composer dependencies.
 
-PowerShell:
+### 2. Create and configure `.env`
 
+```powershell
+Copy-Item .env.example .env
+notepad .env
+```
 
-### 3. Configure the database
-
-For SQLite, create the database file and set these values in `.env`:
+In `.env`, set the application and database values below. Keep the other settings already in the file, and replace `your-mysql-password` with your MySQL password.
 
 ```env
+APP_NAME="Task Management System"
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://127.0.0.1:8000
+
 DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
 DB_DATABASE=crmdb
+DB_USERNAME=root
+DB_PASSWORD=
 ```
-For MySQL or PostgreSQL, configure `DB_CONNECTION`, `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD` in `.env` instead.
 
+### 3. Create the MySQL database
 
-### 5. Create database tables
+```powershell
+mysql -u root -p -e "CREATE DATABASE crmdb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+```
 
-```sh
+Enter your MySQL password when prompted. Alternatively, run this SQL in MySQL Workbench:
+
+```sql
+CREATE DATABASE crmdb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+### 4. Generate the Laravel application key
+
+```powershell
+php artisan key:generate
+```
+
+### 5. Run database migrations
+
+```powershell
 php artisan migrate
 ```
 
-### 7. Add roles, permissions, demo users, and sample records
+### 6. Seed roles, permissions, users, and sample data
 
-```sh
+```powershell
 php artisan db:seed
 ```
 
-`DatabaseSeeder` runs `RolePermissionSeeder` and creates the demo Admin, Employees, project, and tasks. Running the seeder again is safe.
+### 7. Start the application
 
-### 8. Compile frontend assets
-
-```sh
-npm run build
-```
-
-### 9. Start the development server
-
-```sh
+```powershell
 php artisan serve
 ```
-
 Open `http://127.0.0.1:8000` and sign in.
 
 ## Demo Login
