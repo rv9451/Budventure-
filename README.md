@@ -25,46 +25,19 @@ composer install
 
 PowerShell:
 
-```powershell
-Copy-Item .env.example .env
-```
-
-macOS/Linux:
-
-```sh
-cp .env.example .env
-```
 
 ### 3. Configure the database
 
 For SQLite, create the database file and set these values in `.env`:
 
 ```env
-DB_CONNECTION=sqlite
-DB_DATABASE=database/database.sqlite
+DB_CONNECTION=mysql
+DB_DATABASE=crmdb
 ```
-
-PowerShell:
-
-```powershell
-New-Item -ItemType File -Path database/database.sqlite -Force
-```
-
 For MySQL or PostgreSQL, configure `DB_CONNECTION`, `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD` in `.env` instead.
 
-### 4. Generate the application key
 
-```sh
-php artisan key:generate
-```
-
-### 5. Install frontend dependencies
-
-```sh
-npm install
-```
-
-### 6. Create database tables
+### 5. Create database tables
 
 ```sh
 php artisan migrate
